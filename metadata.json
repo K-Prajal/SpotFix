@@ -1,0 +1,6 @@
+{
+  "name": "SpotFix",
+  "description": "AI-powered Hyperlocal Civic Issue Reporting Platform for Indore, Madhya Pradesh.",
+  "requestFramePermissions": ["camera", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

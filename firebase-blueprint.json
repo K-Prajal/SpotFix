@@ -1,0 +1,121 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile with gamification stats, XP, and rank details",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "avatar": { "type": "string" },
+        "role": { "type": "string", "enum": ["citizen", "admin"] },
+        "reputationScore": { "type": "integer" },
+        "xp": { "type": "integer" },
+        "rank": { "type": "string", "enum": ["Bronze", "Silver", "Gold", "Platinum"] },
+        "badges": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "name", "email", "role", "xp"]
+    },
+    "Report": {
+      "title": "Civic Issue Report",
+      "description": "A citizen-reported infrastructure or utility issue with AI analysis and tracking status",
+      "type": "object",
+      "properties": {
+        "reportId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "severity": { "type": "string", "enum": ["Low", "Medium", "High", "Critical"] },
+        "urgency": { "type": "string" },
+        "estimatedCost": { "type": "number" },
+        "predictedResolutionTime": { "type": "string" },
+        "recommendedDepartment": { "type": "string" },
+        "status": { "type": "string", "enum": ["Submitted", "AI Verified", "Community Verified", "Assigned", "In Progress", "Resolved", "Closed"] },
+        "ward": { "type": "string" },
+        "landmark": { "type": "string" },
+        "address": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "images": { "type": "array", "items": { "type": "string" } },
+        "anonymous": { "type": "boolean" },
+        "contactNumber": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "commentsCount": { "type": "integer" },
+        "upvotesCount": { "type": "integer" },
+        "verificationsCount": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reportId", "title", "description", "category", "severity", "status", "latitude", "longitude", "authorId"]
+    },
+    "Comment": {
+      "title": "Report Comment",
+      "description": "Discussion comments on a reported issue",
+      "type": "object",
+      "properties": {
+        "commentId": { "type": "string" },
+        "reportId": { "type": "string" },
+        "content": { "type": "string" },
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorAvatar": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["commentId", "reportId", "content", "authorId", "authorName"]
+    },
+    "Vote": {
+      "title": "Vote / Verification",
+      "description": "Upvotes and verification flags on a report",
+      "type": "object",
+      "properties": {
+        "voteId": { "type": "string" },
+        "reportId": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["upvote", "verify"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["voteId", "reportId", "userId", "type"]
+    },
+    "Notification": {
+      "title": "User Notification",
+      "description": "Activity alerts and progress notifications for users",
+      "type": "object",
+      "properties": {
+        "notificationId": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "type": { "type": "string" },
+        "reportId": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["notificationId", "userId", "title", "message", "read", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Citizen profile collection"
+    },
+    "/reports/{reportId}": {
+      "schema": "Report",
+      "description": "Reported civic issue documents"
+    },
+    "/reports/{reportId}/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "Sub-collection of comments for a report"
+    },
+    "/reports/{reportId}/votes/{voteId}": {
+      "schema": "Vote",
+      "description": "Sub-collection of upvotes and verification markers"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "Notification",
+      "description": "User notifications alerts"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global helper to check if a request is authenticated
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Users Collection: Profiles are readable and writable to support leaderboard display and seamless signup flows
+    match /users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Reports Collection: Publicly visible to all visitors; creation and modifications require authentication
+    match /reports/{reportId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Subcollection Comments: Publicly visible; writing comments requires authentication
+    match /reports/{reportId}/comments/{commentId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Subcollection Votes: Publicly visible; voting requires authentication
+    match /reports/{reportId}/votes/{voteId} {
+      allow read: if true;
+      allow write: if isSignedIn();
+    }
+
+    // Notifications Collection: Accessible for client notifications and real-time alerts
+    match /notifications/{notificationId} {
+      allow read, write: if true;
+    }
+
+    // Test Collection: For automated connection verification
+    match /test/{testId} {
+      allow read, write: if true;
+    }
+  }
+}

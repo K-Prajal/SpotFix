@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Base style resets */
+body {
+  font-family: var(--font-sans);
+  background-color: #F8FAFC; /* slate-50 */
+  color: #1E293B; /* slate-800 */
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+/* Custom animations */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+/* Custom Leaflet Pin overrides to remove default white box border */
+.custom-leaflet-pin {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Ensure Leaflet zoom controls have elegant white styling matching SpotFix theme */
+.leaflet-bar {
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+.leaflet-bar a {
+  background-color: #ffffff !important;
+  color: #475569 !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  transition: all 0.2s;
+}
+.leaflet-bar a:hover {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+}
+.leaflet-container {
+  font-family: "Inter", sans-serif !important;
+}
+
